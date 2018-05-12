@@ -55,7 +55,7 @@ public class ViewDialog extends JDialog {
 		contentArea.setText(contentBuf.toString());
 		contentArea.setEditable(false);
 		
-		this.pack();
+		this.setSize(800, 600);
 		this.setLocationRelativeTo(this.getParent());
 	}
 	

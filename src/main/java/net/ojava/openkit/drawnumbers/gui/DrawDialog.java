@@ -33,7 +33,7 @@ public class DrawDialog extends JDialog {
 	private Set<Integer> awardSet = new HashSet<Integer>();
 	private Object awardLock = new Object();
 	
-	private int[] mynums = {1, 80};
+	private int[] mynums = {15};
 	
 	private class DrawThread extends Thread {
 		public volatile boolean stop = false;

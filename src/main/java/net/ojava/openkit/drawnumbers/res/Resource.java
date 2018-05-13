@@ -28,6 +28,9 @@ public class Resource {
 	public static final String KEY_LABEL_VIEWPOOLNUMS = "LABEL.VIEWPOOLNUMS";
 	public static final String KEY_LABEL_DRAW = "LABEL.DRAW";
 	public static final String KEY_LABEL_SYSTEM = "LABEL.SYSTEM";
+	public static final String KEY_LABEL_PRINT = "LABEL.PRINT";
+	public static final String KEY_LABEL_ZOOMIN = "LABEL.ZOOMIN";
+	public static final String KEY_LABEL_ZOOMOUT = "LABEL.ZOOMOUT";
 	
 	public static final String KEY_TIP_UNDRAWING="TIP.UNDRAWING";
 	public static final String KEY_TIP_POOLINGNUMS="TIP.POOLINGNUMS";
@@ -50,6 +53,7 @@ public class Resource {
 	public static final String KEY_TITLE_VIEWAWARDINFO="TITLE.VIEWAWARDINFO";
 	
 	public static final String KEY_SAMPLE_AWARDS="SAMPLE.AWARDS";
+	public static final String KEY_SAMPLE_NUMBERS="SAMPLE.NUMBERS";
 	
 	public static final String KEY_ERROR_EMPTYEXTNAME="ERROR.EMPTYEXTNAME";
 	public static final String KEY_ERROR_INVALIDOUTPUTPATH="ERROR.INVALIDOUTPUTPATH";

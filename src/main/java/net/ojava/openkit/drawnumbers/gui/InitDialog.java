@@ -2,6 +2,7 @@ package net.ojava.openkit.drawnumbers.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,10 +27,15 @@ import javax.swing.border.EmptyBorder;
 import net.ojava.openkit.drawnumbers.core.AwardItem;
 import net.ojava.openkit.drawnumbers.core.DrawNumbers;
 import net.ojava.openkit.drawnumbers.res.Resource;
+import net.ojava.openkit.drawnumbers.util.Profile;
 import net.ojava.openkit.drawnumbers.util.StrUtil;
 
 public class InitDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
+	
+	private JButton zoomInBtn = new JButton(Resource.getInstance().getResourceString(Resource.KEY_LABEL_ZOOMIN));
+	private JButton zoomOutBtn = new JButton(Resource.getInstance().getResourceString(Resource.KEY_LABEL_ZOOMOUT));
+	
 	private JLabel numberLabel = new JLabel(Resource.getInstance().getResourceString(Resource.KEY_LABEL_POOLNUMS));
 	private JTextArea numberArea = new JTextArea(20, 60);
 	
@@ -44,6 +50,8 @@ public class InitDialog extends JDialog {
 	private Pattern numberPattern1 = Pattern.compile("\\d+-\\d+");
 	private Pattern awardPattern1 = Pattern.compile("[\\w|\u4E00-\u9FA5|\ufe30-\uffa0]+=\\d+");
 	
+	private int fontSize = Profile.getInstance().getNumberFontSize();
+	
 	public InitDialog(JFrame parent) {
 		super(parent, Resource.getInstance().getResourceString(Resource.KEY_TITLE_AWARDINIT), true);
 		
@@ -53,12 +61,26 @@ public class InitDialog extends JDialog {
 	}
 	
 	private void initComponents() {
+		this.numberArea.setFont(getZoomFont());
+		this.awardField.setFont(getZoomFont());
+		
 		JPanel cp = new JPanel();
 		this.setContentPane(cp);
 		cp.setLayout(new BorderLayout());
 		cp.setBorder(new EmptyBorder(5, 7, 7, 7));
 		
-		cp.add(numberLabel, BorderLayout.NORTH);
+		
+		JPanel zoomPanel = new JPanel();
+		zoomPanel.setLayout(new GridLayout(1, 2, 5, 5));
+		zoomPanel.add(zoomInBtn);
+		zoomPanel.add(zoomOutBtn);
+		
+		JPanel northPanel = new JPanel();
+		northPanel.setLayout(new BorderLayout());
+		northPanel.add(numberLabel, BorderLayout.CENTER);
+		northPanel.add(zoomPanel, BorderLayout.EAST);
+		
+		cp.add(northPanel, BorderLayout.NORTH);
 		cp.add(new JScrollPane(numberArea), BorderLayout.CENTER);
 
 		JPanel subPanel = new JPanel();
@@ -75,11 +97,11 @@ public class InitDialog extends JDialog {
 		p3.add(okBtn);
 		p3.add(cancelBtn);
 		
-		numberArea.setText("1-87");
+		numberArea.setText(Resource.getInstance().getResourceString(Resource.KEY_SAMPLE_NUMBERS));
 		numberArea.setLineWrap(true);
 		awardField.setText(Resource.getInstance().getResourceString(Resource.KEY_SAMPLE_AWARDS));
 		
-		this.setSize(800, 500);
+		this.setSize(1000, 700);
 		this.setLocationRelativeTo(this.getParent());
 	}
 	
@@ -102,6 +124,20 @@ public class InitDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				doCancel();
+			}
+		});
+		
+		zoomInBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				doZoomIn();
+			}
+		});
+		
+		zoomOutBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				doZoomOut();
 			}
 		});
 	}
@@ -132,6 +168,24 @@ public class InitDialog extends JDialog {
 		
 		ok = true;
 		this.dispose();
+	}
+	
+	private Font getZoomFont() {
+		return new Font("宋体", Font.PLAIN, fontSize);
+	}
+	
+	private void doZoomIn() {
+		if(this.fontSize < Profile.MAX_NUMBER_FONT_SIZE) {
+			this.fontSize ++ ;
+			this.numberArea.setFont(getZoomFont());
+		}
+	}
+	
+	private void doZoomOut() {
+		if(this.fontSize >= Profile.MIN_NUMBER_FONT_SIZE) {
+			this.fontSize -- ;
+			this.numberArea.setFont(getZoomFont());
+		}
 	}
 	
 	private List<Integer> parseNumberPool(String src) {

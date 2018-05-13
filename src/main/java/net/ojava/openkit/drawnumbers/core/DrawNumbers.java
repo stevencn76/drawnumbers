@@ -1,8 +1,11 @@
 package net.ojava.openkit.drawnumbers.core;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import net.ojava.openkit.drawnumbers.res.Resource;
 
@@ -63,8 +66,11 @@ public class DrawNumbers {
 	}
 	
 	public List<Integer> getNumberPool() {
-		List<Integer> tmpPool = new LinkedList<Integer>();
-		tmpPool.addAll(numberPool);
+		Set<Integer> tmpSet = new HashSet<Integer>();
+		tmpSet.addAll(numberPool);
+		
+		List<Integer> tmpPool = new ArrayList<Integer>();
+		tmpPool.addAll(tmpSet);
 		
 		return tmpPool;
 	}

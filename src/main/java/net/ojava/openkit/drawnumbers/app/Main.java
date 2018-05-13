@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.Enumeration;
+import java.util.Locale;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -16,6 +17,7 @@ import org.apache.log4j.PatternLayout;
 
 import net.ojava.openkit.drawnumbers.gui.MainFrame;
 import net.ojava.openkit.drawnumbers.res.Resource;
+import net.ojava.openkit.drawnumbers.util.Profile;
 
 public class Main {
 	private static Logger log = Logger.getLogger(Main.class);
@@ -25,7 +27,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-//		Locale.setDefault(Resource.cnLocale);
+		Locale.setDefault(Resource.cnLocale);
 		
 		initLogger();
 
@@ -94,6 +96,7 @@ public class Main {
 	}
 	
 	public static boolean initApp() throws Exception {
+		Profile.getInstance();
 		Resource.getInstance().initResources();
 		try {
 //			System.setProperty("CFBundleName", "aaaa");
@@ -112,6 +115,8 @@ public class Main {
 //		
 		Resource.getInstance().freeResources();
 		log.info("exit FileCollector application");
+		
+		Profile.getInstance().save();
 		
 		System.exit(0);
 	}
